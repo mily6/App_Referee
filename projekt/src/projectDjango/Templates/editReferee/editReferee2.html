@@ -1,0 +1,30 @@
+{% extends '__base__.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/editReferee.css' %}">
+{% endblock %}
+{% block content %}
+
+        <h1 class="edit">Edytuj swoje dane</h1>
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>{% if message.tags %} {% endif %}{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+        <div class="form-container">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {{ user_form.as_p }}
+            <div class="buttons">
+                <button class="back-button" onclick="event.preventDefault(); window.location.href='{% url 'logged' %}';">Wróć</button>
+                <button class="back-button" type="submit">Zaktualizuj</button>
+            </div>
+        </form>
+        </div>
+
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,303 @@
+.naglowek{
+width: 100%;
+height: 100px;
+background-color: #E1B562;
+color: #4D6879 !important;
+display: flex;
+align-items: center;
+border-bottom: 1px solid #4D6879;
+
+}
+
+h1{
+padding-left: 40px;
+text-align: left;
+text-shadow: 4px 8px 8px #888888;
+border-top:none;
+border-bottom: none;
+text-transform: uppercase;
+font-family: 'Catamaran', sans-serif;
+font-weight: 500;
+font-size: 50px
+}
+
+.h2{
+margin-left: 200px;
+border-top:none;
+border-bottom: none;
+text-transform: uppercase;
+font-family: 'Catamaran', sans-serif;
+font-size: 20px;
+margin-bottom: 0px;
+}
+
+body {
+
+    background-image: url('stadion.jpeg');
+    background-size: cover;
+}
+
+.link{
+font-size: 20px;
+margin-left: 90px;
+cursor: pointer;
+color: #4D6879;
+}
+
+.link:hover{
+color: #505050;
+}
+
+a{
+color: #4D6879;
+}
+
+a:hover{
+color: #505050;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Wyświetlenie zawartości menu po najechaniu */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Styl dla linków w menu rozwijanym */
+.dropdown-content a {
+    color: white;
+    padding: 8px 10px;
+    display: block;
+    background-color: #4D6879;
+    font-size: 16px;
+    border-radius: 2px;
+}
+
+.option2{
+border-top: 0.5px solid white;
+}
+
+.messages{
+margin-left:5px;
+}
+
+.mailbox-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tablink {
+    background-color: #4D6879;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.tablink:hover {
+    background-color: #505050;
+}
+
+.compose-section, .inbox-section, .sent-section {
+    flex: 1;
+    padding: 20px;
+    background-color: #E1B562;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #4D6879;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #4D6879;
+}
+
+li.unread {
+    font-weight: bold;
+}
+
+.tabs{
+display: flex;
+   flex-direction: column;
+   width: 180px;
+
+}
+
+.tabcontent{
+background-color: #E1B562;
+padding: 40px;
+width: 95%;
+display: flex;
+justify-content: center;
+align-items: center;
+border-radius: 5px;
+margin-top: 50px;
+margin-right: 10vw;
+
+}
+
+.mailbox-container{
+display: flex;
+flex-direction: row;
+}
+
+.tabcontents {
+    flex: 3; /* Zawartość zakładek zajmuje cztery jednostki przestrzeni (czyli jest 4 razy szersza niż zakładki) */
+    display: flex;
+    justify-content: center; /* Wyśrodkowanie zawartości poziomo */
+}
+
+.tabs_background{
+background-color: #E1B562;
+padding:40px;
+padding-bottom: 20px;
+height: 100%;
+border-radius: 5px;
+margin-top: 50px;
+
+}
+
+.main_message{
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+cursor: pointer;
+}
+
+
+.delete{
+margin-right: 80px;
+}
+
+.main_message2{
+display: flex;
+align-items: center;
+}
+
+.item3{
+margin-right: 8px;
+padding-top: 50px;
+padding-bottom: 100px;
+}
+
+/* Styl dla "przycisku" */
+.clickable {
+    cursor: pointer;
+}
+
+.main_message:hover {
+    background-color: #EDF4FF;
+}
+
+/* Styl dla modala */
+.message-content-modal {
+    display: none; /* domyślnie ukryte */
+    position: fixed; /* pozycjonowanie względem okna przeglądarki */
+    top: 50%; /* ustawienie góry okienka na środku ekranu */
+    left: 50%; /* ustawienie lewej krawędzi okienka na środku ekranu */
+    transform: translate(-50%, -50%); /* przesunięcie okienka, aby było dokładnie na środku */
+    width: 300px; /* szerokość okienka */
+    height: 300px; /* wysokość okienka (kwadrat) */
+    background-color: #fff; /* białe tło */
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* delikatny cień dla estetyki */
+    padding: 20px; /* wewnętrzne marginesy dla treści okienka */
+    padding-bottom: 0px;
+    box-sizing: border-box; /* aby padding był uwzględniany w wymiarach okienka */
+    z-index: 1000; /* wartość z-index, aby okienko było na wierzchu innych elementów */
+    width: 60%;
+    height: 60%;
+    cursor: default;
+    overflow-y: auto;  /* umożliwia pionowe przewijanie w razie potrzeby */
+    overflow-x: hidden; /* uniemożliwia poziome przewijanie */
+    word-wrap: break-word; /* zawijanie treści */
+    border-radius: 5px;
+    border:solid 2px black;
+
+
+.window {
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+cursor: default;
+margin-bottom: 30px;
+padding: 20px 0px;
+border-bottom: solid 0.5px black;
+}
+
+#click{
+cursor: default;
+}
+
+#click2{
+cursor: default;
+}
+
+
+.bottom-bar {
+    position: sticky;
+    bottom: 0;
+    background-color: white;
+    padding: 10px;
+    text-align: right;
+}
+
+.close-modal {
+    background-color: #4D6879;
+    padding: 5px 15px;
+    border: none;
+    cursor: pointer;
+}
+
+.close-modal:hover{
+background-color: #505050;
+
+}
+
+.select2-results__options {
+    max-height: 160px;
+    overflow-y: auto;
+}
+
+#id_subject{
+width:300px;
+}
+
+#id_body
+width:500px;
+}
+
+
+
+

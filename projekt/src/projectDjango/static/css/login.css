@@ -1,0 +1,178 @@
+
+.naglowek{
+width: 100%;
+height: 100px;
+background-color: #E1B562;
+color: #4D6879 !important;
+display: flex;
+align-items: center;
+border-bottom: 1px solid #4D6879;
+
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('tlo4.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;  /* Zapewnia, że obraz tła się nie powtarza */
+    background-attachment: fixed;  /* Zapewnia, że tło pozostaje nieruchome podczas przewijania */
+    background-size: 100% 100%;
+   }
+
+   body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.2);  /* Dostosuj wartość 0.5, aby uzyskać pożądany poziom przyciemnienia */
+    pointer-events: none; /* Ważne, aby zachować interaktywność elementów znajdujących się poniżej nakładki */
+    z-index: -1; /* Upewnij się, że nakładka znajduje się pod zawartością strony */
+}
+
+h1{
+padding-left: 40px;
+text-align: left;
+text-shadow: 4px 8px 8px #888888;
+border-top:none;
+border-bottom: none;
+text-transform: uppercase;
+font-family: 'Catamaran', sans-serif;
+font-weight: 500;
+font-size: 50px
+}
+
+.naglowek {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.main{
+    float: left;
+    padding: 60px;
+    display: flex;
+    flex-direction: column ;
+    background-color: #E1B562;
+    margin-top: 120px;
+    margin-left: 180px;
+    border-radius: 5px;
+    margin-bottom: 50px;
+    width: 400px;
+}
+
+h2 {
+    color: #4D6879;
+    text-align: center;
+    text-shadow: 4px 8px 8px #888888;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    position: absolute;
+    top: 1.5rem;
+    left: 0;
+    font-size: 0.9rem;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    width: 100%; /* zmiana na 100% szerokości */
+    border: none;
+    border-bottom: 2px solid #333;
+    padding-top: 2.5rem;
+    margin-top: 0.6rem;
+    font-size: 1rem;
+    outline: none;
+    background-color: transparent;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="password"]:focus {
+    border-color: #4D6879;
+}
+
+.form-group input[type="text"]:focus + label,
+.form-group input[type="password"]:focus + label {
+    top: -1.5rem;
+    left: 0;
+    font-size: 0.75rem;
+    color: #4D6879;
+}
+
+button {
+    width: 100%; /* zmiana na 100% szerokości */
+    padding: 0.5rem 0;
+    font-size: 1rem;
+    border: none;
+    background-color: #4D6879;
+    color: #FFF;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    margin-top: 20px;
+
+}
+
+button:hover {
+    background-color: #505050;
+}
+
+.messages {
+    margin-top: 1rem;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.messages li {
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+a{
+    color: #4D6879;
+    text-decoration: none;
+    text-align: right;
+    display: flex;
+    justify-content: right;
+
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #505050;
+}
+
+.p{
+margin-top:15px;
+display: flex;
+justify-content: center;
+}
+
+a.button{
+display: flex;
+justify-content: center;
+padding-top: 20px}
+
+.komunikat{
+margin-top: 10px;
+margin-bottom: 10px;
+color: red;
+text-align: center;
+}
+.kom .komunikat2{
+margin-top: 10px;
+margin-bottom: 10px;
+color: green;
+text-align: center;
+}

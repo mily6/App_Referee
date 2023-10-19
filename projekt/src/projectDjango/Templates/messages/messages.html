@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+    {% load static %}
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/messages.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+
+    <title>Wiadomości</title>
+</head>
+<body>
+    <div class="naglowek">
+        <h1>Łączy nas gwizdek</h1>
+        <h2 class="h2">{{ referee.name }} {{ referee.surname }}</h2>
+        <a class="link" href="{% url 'messages' %}"><i class="fas fa-envelope"></i><span class="messages">Wiadomości</span></a>
+        <a class="link" href="{% url 'login' %}"><i class="fas fa-sign-out-alt"></i><span class="messages">Wyloguj się</span></a>
+        <div class="dropdown">
+            <a class="link" href="#">
+                <i class="fas fa-cog"></i>
+                <i class="fas fa-chevron-down fa-xs"></i>
+            </a>
+        <div class="dropdown-content">
+            <a href="#">Edytuj dane</a>
+            <a class="option2" href="#">Zmień hasło</a>
+        </div>
+    </div>
+    </div>
+<div class="mailbox-container">
+  <div class="tabs_background">  <!-- Zakładki -->
+    <div class="tabs">
+        <button class="tablink" onclick="openTab('Compose', this)">Napisz wiadomość</button>
+        <button class="tablink" onclick="openTab('Inbox', this)">Odebrane</button>
+        <button class="tablink" onclick="openTab('Sent', this)">Wysłane</button>
+    </div>
+  </div>
+<div class="tabcontents">
+    <!-- Sekcja z formularzem do pisania wiadomości -->
+    <div id="Compose" class="tabcontent">
+        <h2>Napisz wiadomość</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Wyślij</button>
+        </form>
+    </div>
+
+    <!-- Sekcja z odebranymi wiadomościami -->
+    <div id="Inbox" class="tabcontent">
+        <h2>Skrzynka odbiorcza</h2>
+        <ul>
+            {% for message in inbox_messages %}
+                <li id="main_message" class="main_message">
+                        <div class="items clickable">
+                            <strong class="item2">Od:</strong> {{ message.sender.referee.name }} {{ message.sender.referee.surname }} - {{ message.sender.username }}<br>
+                            <strong class="item">Temat:</strong> {{ message.subject }}<br>
+                        </div>
+                        <div class="main_message2">
+                        <a class="delete" href="{% url 'delete_message' message.id %}">Usuń</a>
+                        <small class="date">{{ message.date_sent }}</small>
+                        </div>
+                    <!-- Dodanie ukrytego okienka z treścią wiadomości -->
+                    <div class="message-content-modal">
+                        <div class="window">
+                            <div id="click" class="items clickable">
+                                <strong class="item2">Od:</strong> {{ message.sender.referee.name }} {{ message.sender.referee.surname }} - {{ message.sender.username }}<br>
+                                <strong class="item">Temat:</strong> {{ message.subject }}<br>
+                            </div>
+                            <small>{{ message.date_sent }}</small>
+                        </div>
+                        <span class="item3">
+                        <strong class="item3">Treść:</strong> {{ message.body }}
+                        </span>
+                        <div class="bottom-bar">
+                            <button class="close-modal">Zamknij</button>
+                         </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="pagination">
+        <span class="step-links">
+
+            <span class="current">
+                Strona {{ page_obj.number }} z {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_previous %}
+    <a href="?page=1&sent_page={{ sent_page_obj.number }}">&laquo; pierwsza</a>
+    <a href="?page={{ page_obj.previous_page_number }}&sent_page={{ sent_page_obj.number }}">poprzednia</a>
+{% endif %}
+{% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}&sent_page={{ sent_page_obj.number }}">następna</a>
+    <a href="?page={{ page_obj.paginator.num_pages }}&sent_page={{ sent_page_obj.number }}">ostatnia &raquo;</a>
+{% endif %}
+
+        </span>
+    </div>
+    </div>
+
+
+    <!-- Sekcja z wysłanymi wiadomościami (tu trzeba dostosować kod na podstawie Twojej bazy danych) -->
+    <!-- Sekcja z wysłanymi wiadomościami -->
+<div id="Sent" class="tabcontent">
+    <h2>Wysłane wiadomości</h2>
+    <ul>
+        {% for message in sent_messages %}
+            <li class="main_message">
+                <div class="items clickable">
+                    <strong class="item2">Do:</strong> {{ message.recipient.referee.name }} {{ message.recipient.referee.surname }} - {{ message.recipient.username }}<br>
+                    <strong class="item">Temat:</strong> {{ message.subject }}<br>
+                </div>
+                 <div class="main_message2">
+                        <a class="delete" href="{% url 'delete_message' message.id %}">Usuń</a>
+                        <small class="date">{{ message.date_sent }}</small>
+                 </div>
+                <!-- Dodanie ukrytego okienka z treścią wiadomości -->
+                <div class="message-content-modal">
+                    <div class="window">
+                        <div id="click2" class="items clickable">
+                            <strong class="item2">Do:</strong> {{ message.recipient.referee.name }} {{ message.recipient.referee.surname }} - {{ message.recipient.username }}<br>
+                            <strong class="item">Temat:</strong> {{ message.subject }}<br>
+                        </div>
+                        <small>{{ message.date_sent }}</small>
+                    </div>
+                    <span class="item3">
+                        <strong class="item3">Treść:</strong> {{ message.body }}
+                    </span>
+                    <div class="bottom-bar">
+                        <button class="close-modal">Zamknij</button>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="pagination">
+<span class="step-links">
+    <span class="current">
+        Strona {{ sent_page_obj.number }} z {{ sent_page_obj.paginator.num_pages }}.
+    </span>
+    {% if sent_page_obj.has_previous %}
+    <a href="?sent_page=1&page={{ page_obj.number }}">&laquo; pierwsza</a>
+    <a href="?sent_page={{ sent_page_obj.previous_page_number }}&page={{ page_obj.number }}">poprzednia</a>
+{% endif %}
+{% if sent_page_obj.has_next %}
+    <a href="?sent_page={{ sent_page_obj.next_page_number }}&page={{ page_obj.number }}">następna</a>
+    <a href="?sent_page={{ sent_page_obj.paginator.num_pages }}&page={{ page_obj.number }}">ostatnia &raquo;</a>
+{% endif %}
+
+</span>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<script>
+    function openTab(tabName, elmnt) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).style.display = "block";
+        elmnt.classList.add("active");
+        localStorage.setItem('lastTab', tabName);
+    }
+
+    window.onload = function() {
+        var lastTab = localStorage.getItem('lastTab');
+
+        // Jeśli nie ma zapisanej zakładki, ustaw domyślną
+        if (!lastTab) {
+            lastTab = "Compose"; // Domyślna nazwa zakładki
+        }
+
+        // Symulacja kliknięcia na odpowiedni przycisk zakładki
+        document.querySelector(`[onclick="openTab('${lastTab}', this)"]`).click();
+    };
+</script>
+
+    <script>
+$(document).ready(function() {
+    $(".main_message").on("click", function() {
+        // Otwórz tylko modal związany z klikniętą wiadomością
+        $(this).find(".message-content-modal").show();
+    });
+
+    $(".close-modal").on("click", function(event) {
+        // Zapobiega propagacji zdarzenia "click" do elementów nadrzędnych
+        event.stopPropagation();
+
+        // Zamknij modal, który zawiera ten przycisk
+        $(this).closest(".message-content-modal").hide();
+    });
+});
+</script>
+<script>
+    $(document).ready(function() {
+    $('#id_recipient').select2({
+        width: '250px',
+        dropdownAutoWidth: true,
+    });
+});
+
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", (event) => {
+    form_select = document.getElementById('id_recipient')
+    var option = document.createElement('option')
+    option.value = 0
+    option.innerHTML = 'Wyślij do wszystkich'
+    form_select.appendChild(option)
+    });
+</script>
+
+</body>
+</html>

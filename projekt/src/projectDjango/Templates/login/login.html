@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+    {% load static %}
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+    <title>Logowanie</title>
+</head>
+<body>
+    <div class="naglowek">
+        <h1>Łączy nas gwizdek</h1>
+    </div>
+    <div class="main">
+        <h2>Logowanie</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Nazwa użytkownika:</label>
+                <input type="text" name="username" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Hasło:</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+            <div class="kom">
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                            <div class="komunikat">{{ message }}</div>
+                        {% else %}
+                            <div class="komunikat2" style="color: green; text-align: center;
+margin-top: 10px; margin-bottom: 10px; font-size: 22px; font-weight: 600;">{{ message }}</div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            </div>
+            <div>
+                <a href="{% url 'reset_password' %}">Nie pamiętam hasła</a>
+            </div>
+            <div>
+                <button type="submit">Zaloguj się</button>
+                <p class="p">Pierwszy raz? Dołącz do nas!</p>
+                <a href="{% url 'register_referee' %}" class="button">Zarejestruj się!</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

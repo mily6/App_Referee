@@ -1,0 +1,183 @@
+.naglowek{
+width: 100%;
+height: 100px;
+background-color: #E1B562;
+color: #4D6879 !important;
+display: flex;
+align-items: center;
+border-bottom: 1px solid #4D6879;
+
+}
+
+a{
+color: #4D6879;
+}
+
+h1{
+padding-left: 40px;
+text-align: left;
+text-shadow: 4px 8px 8px #888888;
+border-top:none;
+border-bottom: none;
+text-transform: uppercase;
+font-family: 'Catamaran', sans-serif;
+font-weight: 500;
+font-size: 50px
+}
+
+.h2{
+margin-left: 200px;
+border-top:none;
+border-bottom: none;
+text-transform: uppercase;
+font-family: 'Catamaran', sans-serif;
+font-size: 20px;
+margin-bottom: 0px;
+}
+
+body {
+    background-image: url('stadion.jpeg');
+    background-size: cover;
+    background-position: center;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);  /* Dostosuj wartość 0.5, aby uzyskać pożądany poziom przyciemnienia */
+    pointer-events: none; /* Ważne, aby zachować interaktywność elementów znajdujących się poniżej nakładki */
+    z-index: -1; /* Upewnij się, że nakładka znajduje się pod zawartością strony */
+}
+
+
+.link{
+font-size: 20px;
+margin-left: 90px;
+cursor: pointer;
+}
+
+.link:hover{
+color: #505050;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Wyświetlenie zawartości menu po najechaniu */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Styl dla linków w menu rozwijanym */
+.dropdown-content a {
+    color: white;
+    padding: 8px 10px;
+    display: block;
+    background-color: #4D6879;
+    font-size: 16px;
+    border-radius: 2px;
+}
+
+.option2{
+border-top: 0.5px solid white;
+}
+
+.messages{
+margin-left:5px;
+}
+
+.naglowek2{
+width: 100%;
+height: 100px;
+background-color: #BDC9A6;
+color: #4D6879 !important;
+display: flex;
+align-items: center;
+justify-content: center;
+
+}
+
+.naglowek3{
+width: 50%;
+height: 100px;
+margin: auto;
+margin-top: 20px;
+background-color: #E1B562;
+color: #4D6879 !important;
+display: flex;
+align-items: center;
+justify-content: center;
+border: 1px solid #4D6879;
+border-radius: 5px;
+
+}
+
+.main{
+    width: 50%;
+    height: 600px;
+    margin: auto;
+    margin-top: 5px;
+    background-color: #E1B562;
+    color: #4D6879 !important;
+    padding: 20px;
+    border: 1px solid #4D6879;
+    border-radius: 5px;
+
+}
+
+.row{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10px 0;
+}
+
+h3, p {
+    margin: 0;
+}
+
+.p{
+    border: 1px solid #4D6879;
+    width: 400px; /* Przykładowa stała szerokość */
+    height: 50px;
+    padding: 10px;
+    border-radius: 15px;
+    margin-right: 150px;
+    background-color: #BDC9A6;
+
+}
+.h3{
+margin-right: 25px;
+
+}
+
+.save{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 150px;
+    margin-top: 20px;
+    font-size: 20px;
+
+}
+
+button{
+background-color: #4D6879;
+color: white;
+border: none;
+padding: 8px 15px;
+border-radius: 5px;
+}
+
+button:hover{
+background: #505050;
+}

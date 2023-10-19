@@ -1,0 +1,197 @@
+{% extends '__base__.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/castCaster.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+{% endblock %}
+{% block content %}
+<button type="button" class="button castCaster" data-bs-toggle="modal" data-bs-target="#matchModal">
+    Stwórz obsade
+</button>
+<div class="modal fade" id="matchModal" tabindex="-1" aria-labelledby="matchModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5" id="matchModalLabel">Dodaj mecz</h3>
+            </div>
+            <form class="form" method="POST">
+                <div class="modal-body">
+
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div>
+                        <p>{{field.label}}</p>
+                        {{field}}
+                        {% if field.errors %}
+                        <ul>
+                            {% for err in field.errors %}
+                                <li class="text-danger">{{err}}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="save" data-bs-dismiss="modal">Cofnij</button>
+                    <button type="submit" class="save">Zapisz</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<h2 class="title">Twoje mecze!</h2>
+<table class="custom-table">
+    <thead>
+        <tr>
+            <th class="first">Lp</th>
+            <th>Drużyna Gospodarzy</th>
+            <th>Drużyna Gości</th>
+            <th>Klasa Meczu</th>
+            <th>Data Meczu</th>
+            <th>Godzina Meczu</th>
+            <th>Sędzia Główny</th>
+            <th>Sędzia Asystent 1</th>
+            <th>Sędzia Asystent 2</th>
+            <th class="clicks"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for match in matches %}
+            <tr>
+                <td class="first">{{ forloop.counter }}</td>
+                <td>{{ match.team_a.name }}</td>
+                <td>{{ match.team_b.name }}</td>
+                <td>{{ match.class_match }}</td>
+                <td>{{ match.data_match.date }}</td>
+                <td>{{ match.time_match|time:"H:i" }}</td>
+                <td>{{ match.referee }}</td>
+                <td>{{ match.referee_assistant1 }}</td>
+                <td>{{ match.referee_assistant2 }}</td>
+                <td class="clicks">
+                    <a type="button" class="btn btn-primary editMatch" data-bs-toggle="modal" data-bs-target="#matchModal" data-matchid="{{ match.id }}">
+                        <i class="fas fa-plus fa-xs"></i>
+                    </a>
+                    <a type="button" class="btn2 btn-danger delete-match" data-match-id="{{ match.id }}">
+                        <i class="fas fa-trash fa-xs"></i>
+                    </a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="8">Brak danych</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function() {
+
+    // Pokazuje modal, jeśli są błędy w formularzu
+    {% if form.errors %}
+        $('#availabilityModal').modal('show');
+    {% endif %}
+
+    // Obsługuje usuwanie meczu
+    $(".delete-match").click(function() {
+        var matchId = $(this).data('match-id');
+
+        $.ajax({
+            url: `/delete_match/${matchId}/`,
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            success: (response) => {
+                if (response.success) {
+                    $(this).closest('tr').remove();
+                } else {
+                    alert('Nie udało się usunąć meczu.');
+                }
+            },
+            error: () => {
+                alert('Nie udało się usunąć meczu.');
+            }
+        });
+    });
+
+    // Obsługuje edycję meczu
+    $('.editMatch').on('click', function() {
+        let matchID = $(this).data('matchid');
+
+        $.get('/get_match_data/' + matchID + '/', function(data) {
+            $("#id_team_a").val(data.team_a_id);
+            $("#id_team_b").val(data.team_b_id);
+            $("#id_class_match").val(data.class_match);
+            $("#id_data_match").val(data.data_match);
+            $("#id_time_match").val(data.time_match);
+            $("#id_referee").val(data.referee_id);
+            $("#id_referee_assistant1").val(data.referee_assistant1_id);
+            $("#id_referee_assistant2").val(data.referee_assistant2_id);
+
+            // Zmieniamy akcję formularza, aby wskazywała na URL edycji
+            $(".form").attr("action", "/edit_match/" + matchID + "/");
+
+            // Teraz, po uzupełnieniu klasy meczu, pobieramy odpowiednich sędziów
+            let selectedClass = data.class_match;
+            $.ajax({
+                url: "/get_referees_by_class/",
+                data: {
+                    'class_match': selectedClass
+                },
+                success: function(refData) {
+                    let refereeSelect = $('#id_referee');
+                    refereeSelect.empty();
+                    refData.referee_options.forEach(function(option) {
+                        refereeSelect.append(new Option(option.name, option.id));
+                    });
+
+                    // Po załadowaniu sędziów, ustawiamy sędziego, który był wcześniej wybrany
+                    $("#id_referee").val(data.referee_id);
+                }
+            });
+        });
+    });
+
+    // DODAJEMY NOWĄ FUNKCJONALNOŚĆ - obsługuje tworzenie nowego meczu
+    $('.castCaster').on('click', function() {
+        $(".form")[0].reset();  // Czyści formularz
+        $(".form").attr("action", "/castCaster/");  // Ustawia odpowiednią akcję formularza
+    });
+
+    // Obsługuje wybór sędziego na podstawie klasy meczu i czasu meczu
+    $('#id_class_match, #id_time_match').change(function() {
+        let selectedClass = $(this).val();
+        let matchDate = $('#id_data_match').val();  // powinno zwrócić format 'YYYY-MM-DD'
+        let matchTime = $('#id_time_match').val();  // powinno zwrócić format 'HH:MM'
+
+        $.ajax({
+            url: "/get_referees_by_class/",
+            data: {
+                'class_match': selectedClass,
+                'match_date': matchDate,
+                'match_time': matchTime
+            },
+            success: function(data) {
+                let refereeSelect = $('#id_referee');
+                refereeSelect.empty();
+                data.referee_options.forEach(function(option) {
+                    refereeSelect.append(new Option(option.name, option.id));
+                });
+            }
+        });
+    });
+
+});
+
+</script>
+
+{% endblock %}

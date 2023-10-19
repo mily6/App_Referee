@@ -1,0 +1,54 @@
+{% extends '__base__.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/logged.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+{% endblock %}
+{% block content %}
+<div class="naglowek2">
+        <div class="dropdown">
+            <a class="link">Sędzia<i class="fas fa-chevron-down fa-xs"></i></a>
+            <div class="dropdown-content">
+                <a href="#">Spotkania</a>
+                <a class="option2" href="{% url 'preferences' %}">Preferencje obsady</a>
+            </div>
+        </div>
+        <a class="link">Pomoc - Dokumenty</a>
+        <a class="link">Kontakt</a>
+        <a class="link" href="{% url 'castCaster' %}">Obsada</a>
+    </div>
+    <div class="naglowek3">
+        <h2>Dane Personalne</h2>
+    </div>
+    <div class="main">
+    <div class="row">
+        <h3 class="h3">Imię</h3>
+        <p class="p">{{ referee.name }}</p>
+    </div>
+    <div class="row">
+        <h3 class="h3">Nazwisko</h3>
+        <p class="p">{{ referee.surname }}</p>
+    </div>
+    <div class="row">
+        <h3 class="h3">Data urodzenia</h3>
+        <p class="p">{{ referee.date_of_birth }}</p>
+    </div>
+    <div class="row">
+        <h3 class="h3">Adres</h3>
+        <p class="p">{{ referee.address }}</p>
+    </div>
+    <div class="row">
+        <h3 class="h3">Numer telefonu</h3>
+        <p class="p">{{ referee.phone_number }}</p>
+    </div>
+    <div class="row">
+        <h3 class="h3">Email</h3>
+        <p class="p">{{ referee.user.email }}</p>
+    </div>
+    <div class="save">
+        <a href="{% url 'editReferee' %}"><button>Edytuj</button></a>
+    </div>
+</div>
+{% endblock %}

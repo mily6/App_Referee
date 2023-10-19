@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/logged.css' %}">
+    <title>Zalogowany</title>
+</head>
+<body>
+    <div class="naglowek">
+        <h1>Łączy nas gwizdek</h1>
+        <h2 class="h2">{{ referee.name }} {{ referee.surname }}</h2>
+        <a class="link" href="{% url 'messages' %}"><i class="fas fa-envelope"></i><span class="messages">Wiadomości</span></a>
+        <a class="link" href="{% url 'login' %}"><i class="fas fa-sign-out-alt"></i><span class="messages">Wyloguj się</span></a>
+        <div class="dropdown">
+            <a class="link" href="#">
+                <i class="fas fa-cog"></i>
+                <i class="fas fa-chevron-down fa-xs"></i>
+            </a>
+        <div class="dropdown-content">
+            <a href="{% url 'editReferee' %}">Edytuj dane</a>
+            <a class="option2" href="{% url 'editPassword' %}">Zmień hasło</a>
+        </div>
+    </div>
+
+
+    </div>
+    <div class="naglowek2">
+        <div class="dropdown">
+            <a class="link">Sędzia<i class="fas fa-chevron-down fa-xs"></i></a>
+            <div class="dropdown-content">
+                <a href="#">Spotkania</a>
+                <a class="option2" href="{% url 'preferences' %}">Preferencje obsady</a>
+            </div>
+        </div>
+        <a class="link">Pomoc - Dokumenty</a>
+        <a class="link">Kontakt</a>
+        <a class="link">Obsada</a>
+    </div>
+    <div class="naglowek3">
+        <h2>Dane Personalne</h2>
+    </div>
+    <div class="main">
+    <div class="row">
+        <h3 class="h3">Imię</h3>
+        <p class="p">{{ referee.name }}</p>
+    </div>
+    <div class="row">
+        <h3 class="h3">Nazwisko</h3>
+        <p class="p">{{ referee.surname }}</p>
+    </div>
+    <div class="row">
+        <h3 class="h3">Data urodzenia</h3>
+        <p class="p">{{ referee.date_of_birth }}</p>
+    </div>
+    <div class="row">
+        <h3 class="h3">Adres</h3>
+        <p class="p">{{ referee.address }}</p>
+    </div>
+    <div class="row">
+        <h3 class="h3">Numer telefonu</h3>
+        <p class="p">{{ referee.phone_number }}</p>
+    </div>
+    <div class="row">
+        <h3 class="h3">Email</h3>
+        <p class="p">{{ referee.user.email }}</p>
+    </div>
+    <div class="save">
+        <a href="{% url 'editReferee' %}"><button>Edytuj</button></a>
+    </div>
+</div>
+
+</body>
+</html>
